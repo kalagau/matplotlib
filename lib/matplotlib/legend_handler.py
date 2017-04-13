@@ -148,7 +148,13 @@ class HandlerNpoints(HandlerBase):
     def get_xdata(self, legend, xdescent, ydescent, width, height, fontsize):
         numpoints = self.get_numpoints(legend)
 
-        if numpoints > 1:
+        if ((numpoints < 1) or not (isinstance(numpoints, int) or numpoints.is_integer())):
+            raise ValueError("numpoints must be a whole number and greater" +
+                 " than or equal to 1; it was", numpoints)
+        elif (numpoints == 1):
+            xdata = np.linspace(-xdescent, -xdescent+width, 2)
+            xdata_marker = [-xdescent + 0.5 * width]
+        else:
             # we put some pad here to compensate the size of the
             # marker
             pad = self._marker_pad * fontsize
@@ -156,11 +162,8 @@ class HandlerNpoints(HandlerBase):
                                 -xdescent + width - pad,
                                 numpoints)
             xdata_marker = xdata
-        elif numpoints == 1:
-            xdata = np.linspace(-xdescent, -xdescent+width, 2)
-            xdata_marker = [-xdescent + 0.5 * width]
-
         return xdata, xdata_marker
+
 
 
 class HandlerNpointsYoffsets(HandlerNpoints):
