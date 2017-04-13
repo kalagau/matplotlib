@@ -148,7 +148,7 @@ class HandlerNpoints(HandlerBase):
     def get_xdata(self, legend, xdescent, ydescent, width, height, fontsize):
         numpoints = self.get_numpoints(legend)
 
-        if ((numpoints < 1) or not (isinstance(numpoints, int) or numpoints.is_integer())):
+        if ((numpoints < 1) or not (numpoints.is_integer())):
             raise ValueError("numpoints must be a whole number and greater" +
                  " than or equal to 1; it was", numpoints)
         elif (numpoints == 1):
