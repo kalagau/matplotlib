@@ -2823,8 +2823,8 @@ def test_errorbar_with_prop_cycle():
     _cycle = cycler(ls=['--', ':'], marker=['s', 's'], mfc=['k', 'w'])
     plt.rc("axes", prop_cycle=_cycle)
     fig, ax = plt.subplots()
-    ax.errorbar(x=[2, 4, 10], y=[3, 2, 4], yerr=0.5)
-    ax.errorbar(x=[2, 4, 10], y=[6, 4, 2], yerr=0.5)
+    ax.errorbar(x=[2, 4, 10], y=[3, 2, 4], yerr=0.5, lw=1.5)
+    ax.errorbar(x=[2, 4, 10], y=[6, 4, 2], yerr=0.5, lw=1.5)
 
 
 @image_comparison(baseline_images=['hist_stacked_stepfilled',
@@ -3160,7 +3160,7 @@ def test_eventplot():
 
 @image_comparison(baseline_images=['test_eventplot_defaults'],
                   extensions=['png'], remove_text=True)
-def test_eventplot_defaults():
+def test_evefntplot_defaults():
     '''
     test that eventplot produces the correct output given the default params
     (see bug #3728)

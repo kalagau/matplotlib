@@ -476,6 +476,19 @@ backend      : $TEMPLATE_BACKEND
 
 #### ERRORBAR PLOTS
 #errorbar.capsize : 0             ## length of end cap on error bars in pixels
+#errorbar.errorevery  : 1       ## Subsamples the errorbars
+#errorbar.linewidth   : 1.0     ## line width in points
+#errorbar.linestyle   : -       ## solid line
+#errorbar.color       : C0      ## has no affect on plot(); see axes.prop_cycle
+#errorbar.marker      : None    ## the default marker
+#errorbar.markerfacecolor  : auto    ## the default markerfacecolor
+#errorbar.markeredgecolor  : auto    ## the default markeredgecolor
+#errorbar.markersize  : 6            ## markersize, in points
+#errorbar.dash_joinstyle : round        ## miter|round|bevel
+#errorbar.dash_capstyle : butt          ## butt|round|projecting
+#errorbar.solid_joinstyle : round       ## miter|round|bevel
+#errorbar.solid_capstyle : projecting   ## butt|round|projecting
+#errorbar.antialiased : True         ## render lines in antialiased (no jaggies)
 
 #### HISTOGRAM PLOTS
 #hist.bins : 10                   ## The default number of histogram bins.

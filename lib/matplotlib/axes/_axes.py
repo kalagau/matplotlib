@@ -2820,7 +2820,8 @@ class Axes(_AxesBase):
         errorevery : positive integer, optional, default: 1
             Subsamples the errorbars. e.g., if errorevery=5, errorbars for
             every 5-th datapoint will be plotted. The data plot itself still
-            shows all data points.
+            shows all data points. If 1, it will take
+            the value from :rc:`errorbar.errorevery`.
 
         Returns
         -------
@@ -2849,9 +2850,17 @@ class Axes(_AxesBase):
             where *mfc*, *mec*, *ms* and *mew* are aliases for the longer
             property names, *markerfacecolor*, *markeredgecolor*, *markersize*
             and *markeredgewidth*.
-
+      
             Valid kwargs for the marker properties are `.Lines2D` properties:
-
+            
+            Also note that the following arguments now have rcParam support:  
+            'capsize', 'errorevery',   'linewidth',
+            'linestyle’, 'color', 'marker',
+            'markerfacecolor',  'markeredgecolor',
+            'markersize', 'antialiased',
+            'dash_joinstyle', 'solid_joinstyle',
+            'dash_capstyle', 'solid_capstyle'. 
+            
             %(Line2D)s
 
         Notes
@@ -2860,6 +2869,10 @@ class Axes(_AxesBase):
 
         """
         kwargs = cbook.normalize_kwargs(kwargs, mlines.Line2D._alias_map)
+        
+        if errorevery == 1:
+            errorevery = rcParams['errorbar.errorevery']
+
         # anything that comes in as 'None', drop so the default thing
         # happens down stream
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
@@ -2890,13 +2903,16 @@ class Axes(_AxesBase):
             base_style = {}
             if 'color' in kwargs:
                 base_style['color'] = kwargs.pop('color')
+        elif rcParams['errorbar.color'] != 'C0':
+            base_style = {}
+            base_style['color'] = rcParams['errorbar.color']
         else:
             base_style = next(self._get_lines.prop_cycler)
 
         base_style['label'] = '_nolegend_'
         base_style.update(fmt_style_kwargs)
         if 'color' not in base_style:
-            base_style['color'] = 'C0'
+            base_style['color'] = rcParams['errorbar.color']
         if ecolor is None:
             ecolor = base_style['color']
         # make sure all the args are iterable; use lists not arrays to
@@ -2914,6 +2930,30 @@ class Axes(_AxesBase):
         if yerr is not None:
             if not iterable(yerr):
                 yerr = [yerr] * len(y)
+  
+
+        if base_style.get("linestyle", None) is None:
+            base_style['linestyle'] = rcParams['errorbar.linestyle']
+        if base_style.get("marker", None) is None:
+            base_style['marker'] = rcParams['errorbar.marker']
+        if base_style.get("markerfacecolor", None) is None:
+            base_style['markerfacecolor'] = rcParams['errorbar.markerfacecolor']
+        if base_style.get("markeredgecolor", None) is None:
+            base_style['markeredgecolor'] = rcParams['errorbar.markeredgecolor']
+        if base_style.get("color", None) is None:
+            base_style['color'] = rcParams['errorbar.color']
+        if base_style.get("markersize", None) is None:
+            base_style['markersize'] = rcParams['errorbar.markersize']
+        if base_style.get("antialiased", None) is None:
+            base_style['antialiased'] = rcParams['errorbar.antialiased']
+        if base_style.get("dash_capstyle", None) is None:
+            base_style['dash_capstyle'] = rcParams['errorbar.dash_capstyle']
+        if base_style.get("dash_joinstyle", None) is None:
+            base_style['dash_joinstyle'] = rcParams['errorbar.dash_joinstyle']
+        if base_style.get("solid_capstyle", None) is None:
+            base_style['solid_capstyle'] = rcParams['errorbar.solid_capstyle']
+        if base_style.get("solid_joinstyle", None) is None:
+            base_style['solid_joinstyle'] = rcParams['errorbar.solid_joinstyle']   
 
         # make the style dict for the 'normal' plot line
         plot_line_style = {
@@ -2933,6 +2973,8 @@ class Axes(_AxesBase):
             eb_lines_style['linewidth'] = elinewidth
         elif 'linewidth' in kwargs:
             eb_lines_style['linewidth'] = kwargs['linewidth']
+        else:
+            eb_lines_style['linewidth'] = rcParams['errorbar.linewidth']                    
 
         for key in ('transform', 'alpha', 'zorder', 'rasterized'):
             if key in kwargs:
@@ -2945,6 +2987,15 @@ class Axes(_AxesBase):
         eb_lines_style.pop('markerfacecolor', None)
         eb_lines_style.pop('markeredgewidth', None)
         eb_lines_style.pop('markeredgecolor', None)
+        eb_lines_style.pop('markersize', None)
+        #eb_cap_style.pop('dash_capstyle', None)
+        #eb_cap_style.pop('dash_joinstyle', None)
+        #eb_cap_style.pop('solid_capstyle', None)
+        #eb_cap_style.pop('solid_joinstyle', None) 
+        eb_lines_style.pop('dash_capstyle', None)
+        eb_lines_style.pop('dash_joinstyle', None)
+        eb_lines_style.pop('solid_capstyle', None)
+        eb_lines_style.pop('solid_joinstyle', None)
         eb_cap_style.pop('ls', None)
         eb_cap_style['linestyle'] = 'none'
         if capsize is None:
@@ -2961,7 +3012,7 @@ class Axes(_AxesBase):
             if key in kwargs:
                 eb_cap_style[key] = kwargs[key]
         eb_cap_style['color'] = ecolor
-
+        plot_line_style['linewidth'] = rcParams['errorbar.linewidth']
         data_line = None
         if plot_line:
             data_line = mlines.Line2D(x, y, **plot_line_style)

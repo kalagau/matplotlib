@@ -191,6 +191,71 @@ def test_mec_rcparams():
     mpl.rcParams['lines.markeredgecolor'] = 'r'
     ln = mpl.lines.Line2D([1, 2], [1, 2])
     assert ln.get_markeredgecolor() == 'r'
+    
+
+def test_errorbar_mfc_rcparams():
+    mpl.rcParams['errorbar.markerfacecolor'] = 'r'
+    assert 'errorbar.markerfacecolor' in mpl.rcParams
+
+def test_errorbar_mec_rcparams():
+    mpl.rcParams['errorbar.markeredgecolor'] = 'r'
+    assert 'errorbar.markeredgecolor' in mpl.rcParams
+
+def test_errorbar_capsize_rcparams():
+    mpl.rcParams['errorbar.markerfacecolor'] = 0
+    assert 'errorbar.markerfacecolor' in mpl.rcParams
+
+
+def test_errorbar_errorevery_rcparams():
+    mpl.rcParams['errorbar.errorevery'] = 1
+    assert 'errorbar.errorevery' in mpl.rcParams
+
+def test_errorbar_linewidth_rcparams():
+    mpl.rcParams['errorbar.linewidth'] = 1
+    assert 'errorbar.linewidth' in mpl.rcParams
+
+def test_errorbar_linestyle_rcparams():
+    mpl.rcParams['errorbar.linestyle'] = '-'
+    assert 'errorbar.linestyle' in mpl.rcParams
+
+def test_errorbar_color_rcparams():
+    mpl.rcParams['errorbar.color'] = 'r'
+    assert 'errorbar.color' in mpl.rcParams
+
+
+def test_errorbar_marker_rcparams():
+    mpl.rcParams['errorbar.marker'] = '8'
+    assert 'errorbar.marker' in mpl.rcParams
+
+
+def test_errorbar_markersize_rcparams():
+    mpl.rcParams['errorbar.markersize'] = 2
+    assert 'errorbar.markersize' in mpl.rcParams
+
+
+def test_errorbar_dash_joinstyle_rcparams():
+    mpl.rcParams['errorbar.dash_joinstyle'] = 'projecting'
+    assert 'errorbar.dash_joinstyle' in mpl.rcParams
+
+
+def test_errorbar_dash_capstyle_rcparams():
+    mpl.rcParams['errorbar.dash_capstyle'] = 'butt'
+    assert 'errorbar.dash_capstyle' in mpl.rcParams
+
+
+def test_errorbar_solid_joinstyle_rcparams():
+    mpl.rcParams['errorbar.solid_joinstyle'] = 'round'
+    assert 'errorbar.solid_joinstyle' in mpl.rcParams
+
+
+def test_errorbar_solid_capstyle_rcparams():
+    mpl.rcParams['errorbar.solid_joinstyle'] = 'projecting'
+    assert 'errorbar.solid_capstyle' in mpl.rcParams
+
+
+def test_errorbar_antialiased_rcparams():
+    mpl.rcParams['errorbar.antialiased'] = True
+    assert 'errorbar.antialiased' in mpl.rcParams
 
 
 def test_Issue_1713():

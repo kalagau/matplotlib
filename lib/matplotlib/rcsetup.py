@@ -1142,7 +1142,20 @@ defaultParams = {
     'contour.corner_mask':        [True, validate_bool],
 
     # errorbar props
-    'errorbar.capsize':      [0, validate_float],
+    'errorbar.capsize':         [0, validate_float],
+	  'errorbar.errorevery':      [1, validate_float],
+    'errorbar.linewidth':       [1, validate_float],  # line width in points
+	  'errorbar.linestyle':       ['-', _validate_linestyle],  # solid line
+    'errorbar.color':           ['C0', validate_color],  # first color in color cycle
+    'errorbar.marker':          ['None', validate_string],  # marker name
+    'errorbar.markerfacecolor': ['auto', validate_color_or_auto],  # default color
+    'errorbar.markeredgecolor': ['auto', validate_color_or_auto],  # default color
+    'errorbar.markersize':      [6, validate_float],    # markersize, in points
+    'errorbar.antialiased':     [True, validate_bool],  # antialiased (no jaggies)
+    'errorbar.dash_joinstyle':  ['round', validate_joinstyle],
+    'errorbar.solid_joinstyle': ['round', validate_joinstyle],
+    'errorbar.dash_capstyle':   ['butt', validate_capstyle],
+    'errorbar.solid_capstyle':  ['projecting', validate_capstyle],     
 
     # axes props
     'axes.axisbelow':        ['line', validate_axisbelow],
